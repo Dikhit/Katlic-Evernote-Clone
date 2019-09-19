@@ -1,5 +1,5 @@
 import React from 'react';
-import  { withRouter } from 'react-router-dom';
+import  { withRouter } from 'react-router';
 
 import './LogIn.css';
 
@@ -14,16 +14,19 @@ class LogIn extends React.Component {
     }
 
     gotoRegister = () => {
-        this.props.history.push('/resgiter');
+        this.props.history.push('/register', null);
+    }
+    gotoMain = () => {
+        this.props.history.push('/evernote', null);
     }
     render(){
         return(
                 <div className="body">
                     <div className="container">
-                        <div class="signIn">
+                        <div className="signIn">
                             Ever Note Clone
                         </div>
-                        <div class="fold katlic">
+                        <div className="fold katlic">
                             <form>
                                 <input 
                                     type="text" 
@@ -40,9 +43,10 @@ class LogIn extends React.Component {
                                     type="submit" 
                                     name="" 
                                     value="LogIn"
+                                    onClick = { this.gotoMain }
                                 />
-                                <a href="#"> create an account</a>
-                                <a href="#"> Forgot password</a>
+                                <span onClick = {this.gotoRegister} > Create Account </span>
+                                <span> Forgot password</span>
                             </form>
                         </div>
                     </div>

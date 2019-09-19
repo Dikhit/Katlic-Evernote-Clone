@@ -84,7 +84,7 @@
     background: #237ebf;
 }
 
-.fold form a{
+.fold form span{
     color: #fff;
     margin-top: 20px;
     display: block;
@@ -92,4 +92,5 @@
     text-align: right;
     text-decoration: none;
     font-weight: bold;
+    cursor: pointer;
 }

@@ -15,14 +15,19 @@ class RegisterComponent extends React.Component {
     gotoLogIn = () => {
         this.props.history.push('/')
     }
+
+    gotoMain = () => {
+        this.props.history.push('/evernote')
+    }
+
     render(){
         return(
                 <div className="body">
                     <div className="container">
-                        <div class="signIn">
+                        <div className="signIn">
                             Ever Note Clone
                         </div>
-                        <div class="fold katlic">
+                        <div className="fold katlic">
                             <form>
                                 <input 
                                     type="text" 
@@ -52,7 +57,9 @@ class RegisterComponent extends React.Component {
                                     type="submit" 
                                     name="" 
                                     value="register"
+                                    onClick = { this.gotoMain }
                                 />
+                                <span onClick = {this.gotoLogIn}> Sign In</span>
                             </form>
                         </div>
                     </div>
