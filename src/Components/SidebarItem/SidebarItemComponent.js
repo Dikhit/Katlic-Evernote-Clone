@@ -1,6 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import styles from './SidebarStyle';
+import styles from './SidebarItemStyle';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -10,10 +10,10 @@ class SidebarItemComponent extends React.Component{
     render(){
         return(
             <React.Fragment>
-
+                <div>hello from side bar item</div>
             </React.Fragment>
         );
     }
 }
 
-export default SidebarItemComponent;
+export default withStyles(styles)(SidebarItemComponent);

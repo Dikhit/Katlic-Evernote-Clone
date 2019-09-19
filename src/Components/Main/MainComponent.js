@@ -1,6 +1,9 @@
 import React from 'react';
 import { withRouter } from 'react-router';
-const firebase = require('firebase');
+import SidebarComponent from '../Sidebar/SidebarComponent';
+import SidebarItemComponent from '../SidebarItem/SidebarItemComponent';
+import EditotComponent from '../Editor/EditotComponent';
+import * as firebase from 'firebase';
 class MainComponent extends React.Component{
 
     constructor(props){
@@ -27,7 +30,11 @@ class MainComponent extends React.Component{
     render(){
         return(
             <React.Fragment>
-                <h1>hey there where are you</h1>
+                <SidebarComponent 
+                    selectedNoteIndex = { this.state.selectedNoteIndex }
+                    notes = { this.state.notes }
+                />
+                <EditotComponent/>
             </React.Fragment>
         );
     }

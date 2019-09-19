@@ -4,8 +4,9 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-const firebase = require('firebase');
-require('firebase/firestore');
+import * as firebase from 'firebase';
+import 'firebase/firestore';
+
 var firebaseConfig = {
     apiKey: "AIzaSyAEv3WP56C1Q28S_iKsLXTDZmNVyczWrmc",
     authDomain: "ever-note-clone.firebaseapp.com",
