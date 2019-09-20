@@ -6,44 +6,38 @@ import ListItemText from '@material-ui/core/ListItemText';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { removeHTMLTags } from '../Helpers/Helpers';
 
-class SidebarItemComponent extends React.Component{
-    render(){
-        const { note, index, selectedNoteIndex, selectNoteFinal, deleteNote, classes } = this.props;
-        return(
-            <React.Fragment>
-                <div key = { index }>
-                    <ListItem
-                        className = { classes.listItem }
-                        selected = { selectedNoteIndex === index }
-                        alignItems = 'flex-start'
-                    >
-                        <div
-                            className = { classes.textSection }
-                            onClick = { (note, index) => {this.props.selectNoteFinal(note, index);
-                                console.log(`index is  ${index}`)}        
-                            }
-                        >
-                            <ListItemText
-                                primary = { note.title }
-                                secondary = { removeHTMLTags(note.body.substring(0, 30) )+ '.....' }
-                            >
-                            </ListItemText>
-                        </div>
-                        <DeleteIcon
-                            onClick = { (note) => {
-                                if (window.confirm(`Are you seriously delete ${note.title}`)){
-                                    this.props.deleteNote(note);
-                                }
-                            }}
-                            className = { classes.deleteIcon }
-                        >
+class SidebarItemComponent extends React.Component {
 
-                        </DeleteIcon>
-                    </ListItem>
-                </div>
-            </React.Fragment>
-        );
+  render() {
+
+    const { _index, _note, classes, selectedNoteIndex } = this.props;
+
+    return(
+      <div key={_index}>
+        <ListItem
+          className={classes.listItem}
+          selected={selectedNoteIndex === _index}
+          alignItems='flex-start'>
+            <div 
+              className={classes.textSection}
+              onClick={() => this.selectNote(_note, _index)}>
+                <ListItemText
+                  primary={_note.title}
+                  secondary={removeHTMLTags(_note.body.substring(0, 30)) + '...'}></ListItemText>
+            </div>
+            <DeleteIcon onClick={() => this.deleteNote(_note)}
+              className={classes.deleteIcon}></DeleteIcon>
+        </ListItem>
+      </div>
+    );
+  }
+  selectNote = (n, i) => this.props.selectNote(n, i);
+  deleteNote = (note) => {
+    if(window.confirm(`Are you sure you want to delete: ${note.title}`)) {
+      this.props.deleteNote(note);
     }
+  }
+
 }
 
 export default withStyles(styles)(SidebarItemComponent);
