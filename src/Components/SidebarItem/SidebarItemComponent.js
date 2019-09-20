@@ -7,17 +7,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { removeHTMLTags } from '../Helpers/Helpers';
 
 class SidebarItemComponent extends React.Component{
-    deleteNote = () => {
-        console.log('====================================');
-        console.log('delete icon is clicked');
-        console.log('====================================');
-    }
-
-    selectNote = ( note, index ) => {
-        this.props.selectNote(note, index);
-    }
     render(){
-        const { note, index, selectedNoteIndex, selectNote, deleteNote, classes } = this.props;
+        const { note, index, selectedNoteIndex, selectNoteFinal, deleteNote, classes } = this.props;
         return(
             <React.Fragment>
                 <div key = { index }>
@@ -28,7 +19,9 @@ class SidebarItemComponent extends React.Component{
                     >
                         <div
                             className = { classes.textSection }
-                            onClick = { this.selectNote(note, index) }
+                            onClick = { (note, index) => {this.props.selectNoteFinal(note, index);
+                                console.log(`index is  ${index}`)}        
+                            }
                         >
                             <ListItemText
                                 primary = { note.title }
@@ -37,7 +30,11 @@ class SidebarItemComponent extends React.Component{
                             </ListItemText>
                         </div>
                         <DeleteIcon
-                            onClick = { () => this.deleteNote(note) }
+                            onClick = { (note) => {
+                                if (window.confirm(`Are you seriously delete ${note.title}`)){
+                                    this.props.deleteNote(note);
+                                }
+                            }}
                             className = { classes.deleteIcon }
                         >
 

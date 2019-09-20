@@ -33,16 +33,14 @@ class SidebarComponent extends React.Component{
         console.log('====================================');
     }
 
-    selectNote = () => {
-        console.log('selected note is clicked')
-    }
-
     deleteNote = () => {
         console.log('delete the note ')
     }
 
+    
+
     render(){
-        const { classes, notes, selectedNoteIndex } = this.props;
+        const { classes, notes, selectedNoteIndex, selectNote, deleteNote, newNote } = this.props;
         if ( notes ){
             return(
                 <React.Fragment>
@@ -81,7 +79,7 @@ class SidebarComponent extends React.Component{
                                                 note  = { note }
                                                 index = { index }
                                                 selectedNoteIndex = { selectedNoteIndex }
-                                                selectNote = { this.selectNote }
+                                                selectNoteFinal = { this.selectNoteFinal}
                                                 deleteNote = { this.deleteNote }
                                             />
                                             <Divider></Divider>
@@ -98,6 +96,10 @@ class SidebarComponent extends React.Component{
                 <div/>
             )
         } 
+    }
+
+    selectNoteFinal = (note,  index) => {
+        this.props.selectNote(note, index);
     }
 }
 
