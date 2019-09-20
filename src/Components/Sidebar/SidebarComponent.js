@@ -1,9 +1,10 @@
 import React from 'react';
-import debounce from '../Helpers/Helpers';
+// import debounce from '../Helpers/Helpers';
 import { withStyles } from '@material-ui/core/styles';
-import BorderColorIcon from '@material-ui/icons/BorderColor';
+// import BorderColorIcon from '@material-ui/icons/BorderColor';
 import Styles from './SidebarStyle';
-import { Divider, Button } from '@material-ui/core';
+import { Divider, Button, List} from '@material-ui/core';
+import SidebarItemComponent from '../SidebarItem/SidebarItemComponent';
 
 class SidebarComponent extends React.Component{
     constructor(props){
@@ -20,40 +21,83 @@ class SidebarComponent extends React.Component{
             addingNotes : !this.state.addingNotes,
         })
     }
+    
     updateTitle = title => {
+        this.setState({ title: title })
+        console.log(title)
+    }
+
+    newNote = () => {
         console.log('====================================');
-        console.log('title is ', title);
+        console.log(this.state);
         console.log('====================================');
     }
+
+    selectNote = () => {
+        console.log('selected note is clicked')
+    }
+
+    deleteNote = () => {
+        console.log('delete the note ')
+    }
+
     render(){
         const { classes, notes, selectedNoteIndex } = this.props;
-        return(
-            <React.Fragment>
-                <div className = { classes.sidebarContainer }>
-                    <Button 
-                        onClick = { this.newNoteButtonClick }
-                        className = { classes.newNoteBtn }
-                        style = {{ cursor : 'pointer' }}
-                    > 
-                    {
-                        this.state.addingNotes ? 'cancel' : 'New Note'
-                    }
-                    </Button>
-                    {
-                        this.state.addingNotes ? 
-                        <div>   
-                            <input 
-                                type = "text"
-                                className =  { classes.newNoteInput }
-                                placeholder = "Enter note title"
-                                onKeyUp = { e => this.updateTitle(e.target.value)}
-                            />
-                        </div> : 
-                        <div/>
-                    }
-                </div>
-            </React.Fragment>
-        );
+        if ( notes ){
+            return(
+                <React.Fragment>
+                    <div className = { classes.sidebarContainer }>
+                        <Button 
+                            onClick = { this.newNoteButtonClick }
+                            className = { classes.newNoteBtn }
+                            style = {{ cursor : 'pointer' }}
+                        > 
+                        {
+                            this.state.addingNotes ? 'cancel' : 'New Note'
+                        }
+                        </Button>
+                        {
+                            this.state.addingNotes ? 
+                            <div>   
+                                <input 
+                                    type = "text"
+                                    className =  { classes.newNoteInput }
+                                    placeholder = "Enter note title"
+                                    onKeyUp = { e => this.updateTitle(e.target.value)}
+                                />
+                                <Button 
+                                    className = { classes.newNoteSubmitBtn }
+                                    onClick = { this.newNote }
+                                > Submit Notes </Button>
+                            </div> : 
+                            <div/>
+                        }
+                        <List>
+                            {
+                                this.props.notes.map( (note, index) => {
+                                    return (
+                                        <div key = { index } >
+                                            <SidebarItemComponent
+                                                note  = { note }
+                                                index = { index }
+                                                selectedNoteIndex = { selectedNoteIndex }
+                                                selectNote = { this.selectNote }
+                                                deleteNote = { this.deleteNote }
+                                            />
+                                            <Divider></Divider>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </List>
+                    </div>
+                </React.Fragment>
+            )
+        } else {
+            return (
+                <div/>
+            )
+        } 
     }
 }
 

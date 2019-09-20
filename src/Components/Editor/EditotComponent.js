@@ -1,7 +1,7 @@
 import React from 'react';
 import debounce from '../Helpers/Helpers';
 import { withStyles } from '@material-ui/core/styles';
-import BorderColorIcon from '@material-ui/icons/BorderColor';
+// import BorderColorIcon from '@material-ui/icons/BorderColor';
 import Styles from './EditorStyle';
 import ReactQuill from 'react-quill';
 
@@ -26,7 +26,7 @@ class EditorComponent extends React.Component{
         console.log('====================================');
         console.log('updating database');
         console.log('====================================');
-    }, 2000);
+    }, 1500);
     render(){
         const  { classes } = this.props;
         return(

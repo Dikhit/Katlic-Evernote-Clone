@@ -1,7 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import SidebarComponent from '../Sidebar/SidebarComponent';
-import SidebarItemComponent from '../SidebarItem/SidebarItemComponent';
 import EditotComponent from '../Editor/EditotComponent';
 import * as firebase from 'firebase';
 class MainComponent extends React.Component{
