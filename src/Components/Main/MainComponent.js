@@ -11,29 +11,9 @@ class MainComponent extends React.Component {
     this.state = {
       selectedNoteIndex: null,
       selectedNote: null,
-      notes: null
+      notes: null,
+      loadingLine : 'click on any note'
     };
-  }
-
-  render() {
-    return(
-      <div className="app-container">
-        <SidebarComponent 
-          selectedNoteIndex={this.state.selectedNoteIndex}
-          notes={this.state.notes}
-          deleteNote={this.deleteNote}
-          selectNote={this.selectNote}
-          newNote={this.newNote}></SidebarComponent>
-        {
-          this.state.selectedNote ?
-          <EditorComponent selectedNote={this.state.selectedNote}
-          selectedNoteIndex={this.state.selectedNoteIndex}
-          notes={this.state.notes}
-          noteUpdate={this.noteUpdate}></EditorComponent> :
-          null
-        }
-      </div>
-    );
   }
 
   componentDidMount = () => {
@@ -46,7 +26,7 @@ class MainComponent extends React.Component {
           data['id'] = _doc.id;
           return data;
         });
-        console.log(notes);
+        // console.log(notes);
         this.setState({ notes: notes });
       });
   }
@@ -63,6 +43,7 @@ class MainComponent extends React.Component {
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
       });
   }
+
   newNote = async (title) => {
     const note = {
       title: title,
@@ -81,6 +62,7 @@ class MainComponent extends React.Component {
     const newNoteIndex = this.state.notes.indexOf(this.state.notes.filter(_note => _note.id === newID)[0]);
     this.setState({ selectedNote: this.state.notes[newNoteIndex], selectedNoteIndex: newNoteIndex });
   }
+
   deleteNote = async (note) => {
     const noteIndex = this.state.notes.indexOf(note);
     await this.setState({ notes: this.state.notes.filter(_note => _note !== note) });
@@ -97,6 +79,30 @@ class MainComponent extends React.Component {
       .collection('notes')
       .doc(note.id)
       .delete();
+  }
+
+  render() {
+    return(
+      <div className="app-container">
+        <SidebarComponent 
+          selectedNoteIndex={this.state.selectedNoteIndex}
+          notes={this.state.notes}
+          deleteNote={this.deleteNote}
+          selectNote={this.selectNote}
+          newNote={this.newNote}></SidebarComponent>
+        {
+          this.state.selectedNote ?
+          <EditorComponent selectedNote={this.state.selectedNote}
+          selectedNoteIndex={this.state.selectedNoteIndex}
+          notes={this.state.notes}
+          noteUpdate={this.noteUpdate}></EditorComponent> 
+          :
+          <div>
+            <h2> { this.state.loadingLine } </h2>
+          </div>
+        }
+      </div>
+    );
   }
 }
 

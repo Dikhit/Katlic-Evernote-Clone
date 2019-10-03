@@ -13,6 +13,27 @@ class SidebarComponent extends React.Component {
       title: null
     };
   }
+
+  newNoteBtnClick = () => {
+    this.setState({ title: null, addingNote: !this.state.addingNote });
+  }
+  
+  updateTitle = (text) => {
+    this.setState({ title: text });
+  }
+
+  newNote = () => {
+    this.props.newNote(this.state.title);
+    this.setState({ 
+      title: null, 
+      addingNote: false
+    });
+  }
+
+  selectNote = (n, i) => this.props.selectNote(n, i);
+
+  deleteNote = (note) => this.props.deleteNote(note);
+
   render() {
 
     const { notes, classes, selectedNoteIndex } = this.props;
@@ -22,7 +43,9 @@ class SidebarComponent extends React.Component {
         <div className={classes.sidebarContainer}>
           <Button
             onClick={this.newNoteBtnClick}
-            className={classes.newNoteBtn}>{this.state.addingNote ? 'Cancel' : 'New Note'}</Button>
+            className={classes.newNoteBtn}>
+              {this.state.addingNote ? 'Cancel' : 'New Note'}
+          </Button>
             {
               this.state.addingNote ? 
               <div>
@@ -61,19 +84,6 @@ class SidebarComponent extends React.Component {
       return(<div></div>);
     }
   }
-
-  newNoteBtnClick = () => {
-    this.setState({ title: null, addingNote: !this.state.addingNote });
-  }
-  updateTitle = (txt) => {
-    this.setState({ title: txt });
-  }
-  newNote = () => {
-    this.props.newNote(this.state.title);
-    this.setState({ title: null, addingNote: false });
-  }
-  selectNote = (n, i) => this.props.selectNote(n, i);
-  deleteNote = (note) => this.props.deleteNote(note);
 
 }
 

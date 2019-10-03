@@ -12,7 +12,7 @@ const MainLazyComponent = React.lazy( ()=> import('../Main/MainComponent') )
 class CoreComponent extends React.Component{
     render(){
         return(
-            <Suspense fallback= { <span>Loading...Please Wait</span> } >
+            <Suspense fallback= { <h1>Loading... Please Wait... </h1> } >
                 <BrowserRouter>
                     <Switch>
                         <Route exact path="/" component = {LazyLogIn}/>

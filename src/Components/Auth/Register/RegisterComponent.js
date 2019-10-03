@@ -1,7 +1,14 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import * as firebase from 'firebase';
+import { Card, Button, Input } from 'antd';
 
+//css importing 
 import '../LogIn/LogIn.css';
+import 'antd/dist/antd.css';
+
+//module importing
+import MainComponent from '../../Main/MainComponent';
 
 class RegisterComponent extends React.Component {
     constructor(props){
@@ -9,61 +16,79 @@ class RegisterComponent extends React.Component {
         this.state = {
             name : "",
             email: "",
-            contactNumber: ""
+            isVerifiedUser : false,
+            message: ""
         }
     }
+
     gotoLogIn = () => {
         this.props.history.push('/')
     }
 
-    gotoMain = () => {
-        this.props.history.push('/evernote')
+    onCreateUser = () => {
+        const { email, password } = this.state;
+        const promise = firebase.auth().createUserWithEmailAndPassword(email, password);
+        promise
+            .then(
+                user => {
+                    var message = "Welcome " + user.email;
+                    // firebase.database().ref('/users' + user.uid).set({
+                    //     email: user.email
+                    // });
+                    console.log('====================================');
+                    console.log(user);
+                    console.log('====================================');
+                    this.setState({
+                        message: message
+                    });
+                }
+            ).catch( e => {
+                var message = e.message;
+                console.log('====================================');
+                console.log(message);
+                console.log('====================================');
+                this.setState({
+                    message:message,
+                    name: "",
+                    email: "",
+                    password: ""
+                })
+            })
     }
 
     render(){
         return(
-                <div className="body">
-                    <div className="container">
-                        <div className="signIn">
-                            Ever Note Clone
-                        </div>
-                        <div className="fold katlic">
-                            <form>
-                                <input 
-                                    type="text" 
-                                    name="" 
-                                    placeholder="UserName"
-                                />
-                                
-                                <input 
-                                    type="text" 
-                                    name="" 
-                                    placeholder="Contact Number"
-                                />
-
-                                <input 
-                                    type="text" 
-                                    name="" 
-                                    placeholder="email"
-                                />
-
-                                <input 
-                                    type="password" 
-                                    name="" 
-                                    placeholder="UserPassword"
-                                />
-
-                                <input 
-                                    type="submit" 
-                                    name="" 
-                                    value="register"
-                                    onClick = { this.gotoMain }
-                                />
-                                <span onClick = {this.gotoLogIn}> Sign In</span>
-                            </form>
-                        </div>
-                    </div>
+            <React.Fragment>
+            <Card title = "Evernote Clone" 
+                  style = {{ 
+                    width: '60%',
+                    marginLeft : 250,
+                    marginTop : '10%'
+                }}>
+                {/* <Input 
+                    type = 'text'
+                    onChange = { e=> this.setState({ name: e.target.value })} 
+                    placeholder="Enter your name"  
+                /> */}
+                <Input 
+                    type = 'text'
+                    onChange = { e=> this.setState({ email: e.target.value })} 
+                    placeholder="Enter your verfied email"  
+                    style = {{ marginTop : 5 }}
+                />
+                <Input 
+                    type= 'password' 
+                    onChange = { e=> this.setState({ password: e.target.value })} 
+                    placeholder="Enter your verfied password" 
+                    style = {{ marginTop : 5 }}
+                />
+                <span> { this.state.message } </span>
+                <div style = {{ marginTop : 10}}>
+                    <Button onClick = {this.onCreateUser.bind(this)} >SignUp</Button>
+                    <Button style = {{ marginLeft : 5 }} onClick = { this.gotoLogIn.bind(this) } >SignIn</Button>
                 </div>
+            </Card>                    
+        </React.Fragment>
         );
     }
 }
